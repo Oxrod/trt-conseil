@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <main class="flex flex-col h-screen w-screen bg-slate-700 text-white">
+        <nav class="flex h-20 w-full bg-slate-500 align-center justify-between">
+            <a href="{{ path('app_home') }}"
+               class="flex my-auto p-3 text-4xl font-semibold text-white no-underline cursor-pointer">TRT Conseil</a>
+            <div class="flex space-x-3 align-center">
+                {% if 'ROLE_CANDIDATE' in user.getRoles() %}
+                    <p class="my-auto">Bonjour {{ user.firstName }}{{ user.lastName }}</p>
+                {% elseif 'ROLE_RECRUITER' in user.getRoles() %}
+                    <p class="my-auto">Bonjour recruteur pour {{ user.companyName }}</p>
+                {% endif %}
+                <div class="flex space-x-2 p-3 align-center justify-center">
+                    <div class="flex justify-center align-center">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            {{ user.email }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li><a class="dropdown-item" href="/profile">Mon profil</a></li>
+                            {% if 'ROLE_CONSULTANT' in user.getRoles() %}
+                                <li><a class="dropdown-item" href="/admin/requests">Requêtes</a></li>
+                            {% endif %}
+                            {% if 'ROLE_RECRUITER' in user.getRoles() %}
+                                <li><a class="dropdown-item" href="/admin/my-posts">Mes candidatures</a></li>
+                            {% endif %}
+                            {% if 'ROLE_ADMIN' in user.getRoles() %}
+                                <li><a class="dropdown-item" href="/admin/consultants">Liste des consultants</a></li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% block content %}{% endblock %}
+    </main>
+{% endblock %}

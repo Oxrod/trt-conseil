@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Hello RecruiterPostsController!{% endblock %}
+
+{% block content %}
+    <div>
+        {% for post in userPosts %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ post.location }}</h6>
+                    <p class="card-text">Candidats</p>
+                    <ul>
+                        {% for candidate in post.getCandidates() %}
+                            <li>{{ candidate.firstName }} {{ candidate.firstName }} ({{ candidate.email }})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

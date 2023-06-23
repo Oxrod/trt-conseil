@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegisterController!{% endblock %}
+
+{% block body %}
+
+    <div class="flex flex-col h-screen w-screen bg-slate-700 text-white items-center justify-center">
+        <a href="{{ path('app_index') }}"
+           class="absolute p-2 top-3 left-3 no-underline cursor-pointer border rounded-md border-white text-slate-50 hover:text-slate-700 hover:bg-white">Retour
+            à l'accueil</a>
+            <div>
+                {% if errorMessage is not null %}
+                    <p>{{ errorMessage }}</p>
+                {% endif %}
+            </div>
+        {{ form(form) }}
+    </div>
+{% endblock %}

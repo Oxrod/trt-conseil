@@ -1,0 +1,57 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block content %}
+    <div class="flex flex-col grow p-2">
+        <div>
+            <h1 class="block">Toutes les annonces</h1>
+            {% if 'ROLE_RECRUITER' in user.getRoles() %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPostModal">
+                    Ajouter une annonce
+                </button>
+
+                <div class="modal fade" id="addPostModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="addPostLabel" aria-hidden="true">
+                    <div class="modal-dialog text-black">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="addPostLabel">Ajouter une annonce</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ form(addPostForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <!-- Modal -->
+
+        </div>
+        <ul class="grid grid-cols-4 gap-2 m-0 p-2">
+            {% for post in posts %}
+                <li class="flex h-max w-full">
+                    <div class="card w-full">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ post.location }}</h6>
+                            <p class="card-text">{{ post.description }}</p>
+                            {% if 'ROLE_CANDIDATE' in user.getRoles() %}
+                                {% if user not in post.getCandidates() %}
+                                    <a href="/apply/{{ post.id }}" class="btn btn-primary">Postuler</a>
+                                    {% else %}
+                                        <p class="text-muted"><i>Vous avez déjà postulé pour cette annonce</i></p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="card-footer text-muted">
+                            Recruteur : {{ post.recruiter.companyName }}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

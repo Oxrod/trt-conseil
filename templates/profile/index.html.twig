@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block content %}
+    <main class="p-2">
+        <h2>Infomations personnelles</h2>
+        {% if 'ROLE_CANDIDATE' in user.getRoles() %}
+            <ul>
+                <li>Prénom : {% if user.firstName %}{{ user.firstName }} {% else %} {{ 'Non défini' }}{% endif %}</li>
+                <li>Nom de famille
+                    : {% if user.lastName %}{{ user.lastName }} {% else %} {{ 'Non défini' }}{% endif %}</li>
+                <li>Adresse mail : {{ user.email }}</li>
+                <li>CV au format PDF :
+                    {% if user.cv %}
+                        <a class="btn btn-primary" href="{{ asset('uploads/curriculums/' ~ user.cv) }}">
+                            Voir le document (PDF)
+                        </a>
+                    {% else %}
+                        {{ 'Aucun fichier envoyé' }}
+                    {% endif %}
+                </li>
+            </ul>
+        {% else %}
+            <ul>
+                <li>Nom de l'entreprise
+                    : {% if user.companyName %}{{ user.companyName }}{% else %}{{ 'Non défini' }}{% endif %}</li>
+                <li>Adresse de l'entreprise
+                    : {% if user.companyAdress %}{{ user.companyAdress }} {% else %} {{ 'Non défini' }}{% endif %}</li>
+                <li>Adresse mail : {{ user.email }}</li>
+            </ul>
+        {% endif %}
+
+
+        <!-- Button trigger modal add infos-->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateProfileModalInfos">
+            Mettre à jour mes informations
+        </button>
+
+        <!-- Modal add infos -->
+        <div class="modal fade text-black" id="updateProfileModalInfos" tabindex="-1" aria-labelledby="modalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalLabel">Mettre à jour les informations</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                        <div>
+                            {% if 'ROLE_CANDIDATE' in user.getRoles() %}
+                                {{ form(candidateForm) }}
+                            {% elseif 'ROLE_RECRUITER' in user.getRoles() %}
+                                {{ form(recruiterForm) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

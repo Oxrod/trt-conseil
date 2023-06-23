@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte créé{% endblock %}
+
+{% block body %}
+
+    <div class="flex flex-col h-screen w-screen bg-slate-700 text-white">
+        <h1>Informations de compte validées</h1>
+        <p>Un consultant doit approuver votre demande de création de compte pour pouvoir accéder à vos informations</p>
+
+        <a href="{{ path('app_index') }}"
+           class="btn btn-primary">
+            Retour à l'accueil
+        </a>
+    </div>
+{% endblock %}

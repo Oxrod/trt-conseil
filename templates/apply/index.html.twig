@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Demande de candidature{% endblock %}
+
+{% block content %}
+    <div class="flex justify-center items-center">
+        <div>
+            <h3>Merci d'avoir postulé pour l'annonce {{ post.title }} !</h3>
+            <p>Votre demande de candidature a bien été enregistrée.</p>
+            <p>Une fois approuvée par un de nos consultant, le recruteur recevra votre dossier.</p>
+            <a href="{{ path('app_home') }}" class="btn btn-primary">Retour aux annonces</a>
+        </div>
+    </div>
+{% endblock %}

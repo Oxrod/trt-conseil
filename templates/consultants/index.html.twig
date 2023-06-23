@@ -1,0 +1,55 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liste des consultants{% endblock %}
+
+{% block content %}
+    <div>
+        <div>
+            <h1>Listes des consultants</h1>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addConsultantModal">
+                Ajouter un consultant
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="addConsultantModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-dark">
+                            <div>
+                                {% if errorMessage is not null %}
+                                    <p>{{ errorMessage }}</p>
+                                {% endif %}
+                            </div>
+                            {{ form(addConsultantForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Adresse mail</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for consultant in consultants %}
+                <tr>
+                    <th scope="row">{{ consultant.id }}</th>
+                    <td>{{ consultant.firstName }}</td>
+                    <td>{{ consultant.lastName }}</td>
+                    <td>{{ consultant.email }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

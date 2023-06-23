@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="flex flex-col items-center h-screen w-screen bg-slate-700 text-white">
+        <header class="flex flex-col items-center mb-40">
+            <h1 class="flex">TRT Conseil</h1>
+            <h3 class="flex">Votre partenaire recrutement</h3>
+        </header>
+        <main class="flex flex-col items-center ">
+            <h2 class="mb-2">Actions rapides :</h2>
+            <div class="text-white h-max p-2 space-x-2">
+                {% if user is null %}
+                    <a class="btn btn-primary" href="{{ path('app_login') }}">Se connecter</a>
+                    <a class="btn btn-primary" href="/register">Créer un compte</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ path("app_logout") }}">Se déconnecter</a>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+{% endblock %}

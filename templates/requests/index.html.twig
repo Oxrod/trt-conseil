@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Hello RequestsController!{% endblock %}
+
+{% block content %}
+    <div class="">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Provenance</th>
+                <th scope="col">Cible</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for request in requests %}
+                <tr>
+                    <th scope="row">
+                        {% if request.type == 'account-creation' %}
+                            Création de compte
+                        {% elseif request.type == 'post-creation' %}
+                            Poster une annonce
+                        {% elseif request.type == 'post-appliance' %}
+                            Postuler à une annonce
+                        {% endif %}
+                    </th>
+                    <td>{{ request.issuer.email }}</td>
+                    {% if request.target is null %}
+                        <td>Aucune</td>
+                    {% else %}
+                        <td>
+                            <div>
+                                <h4>{{ request.target.title }}</h4>
+                                <p>{{ request.target.description }}</p>
+                            </div>
+                        </td>
+                    {% endif %}
+                    <td>
+                        <form action="/admin/requests/accept/{{ request.id }}" method="post">
+                            <button type="submit" class="btn btn-success">Accepter</button>
+                        </form>
+                        <a class="btn btn-danger">Refuser</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
